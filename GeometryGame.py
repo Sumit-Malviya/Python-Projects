@@ -13,7 +13,7 @@ taken as an input from user.
 #class Point to create various point objects
 
 class Point:
-  
+
   def __init__(self, x, y):
     self.x = x
     self.y = y
@@ -33,8 +33,8 @@ class Point:
   #Method distance to calcualte distance of an object from
   # a random point given by user
      
-  def distance_from_another_point(self, a, b):
-    distance = ((self.x - a)**2 + (self.y - b)**2)**0.5
+  def distance_from_another_point(self, point):
+    distance = ((self.x - point.x)**2 + (self.y - point.y)**2)**0.5
     return distance
 
 
@@ -43,5 +43,7 @@ class Point:
 point1 = Point(2, 4)
 falls = point1.falls_in_rectangle((1, 3), (5, 6))
 print(falls)
-dist = round(point1.distance_from_another_point(1, 2), 2)
+
+point2 = Point(1, 2)
+dist = round(point1.distance_from_another_point(point2), 2)
 print(dist)
