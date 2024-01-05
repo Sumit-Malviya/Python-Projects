@@ -10,6 +10,10 @@ taken as an input from user.
 
 '''
 
+# imports
+from random import randint
+
+
 #class Point to create various point objects
 
 class Point:
@@ -20,30 +24,69 @@ class Point:
 
 
   #Method falls_in_rectangle to check position of point w.r.t 
-  # lower left and upper right coordinate of rectangle
-    
-  def falls_in_rectangle(self, lower_left_point, upper_right_point):
-    if lower_left_point[0] < self.x < upper_right_point[0] \
-    and lower_left_point[1] < self.y < upper_right_point[1]:
+  #lower left and upper right coordinate of rectangle
+     
+  def falls_in_rectangle(self, rectangle):
+    if rectangle.lower_left_point.x < self.x < rectangle.upper_right_point.x \
+    and rectangle.lower_left_point.y < self.y < rectangle.upper_right_point.y:
       return True
     else:
       return False
-    
+      
 
   #Method distance to calcualte distance of an object from
-  # a random point given by user
+  #a random point given by user
      
   def distance_from_another_point(self, point):
     distance = ((self.x - point.x)**2 + (self.y - point.y)**2)**0.5
     return distance
 
+#class Rectangle
+
+class Rectangle:
+
+  def __init__(self, lower_left_point, upper_right_point):
+    self.lower_left_point = lower_left_point
+    self.upper_right_point = upper_right_point
+  
+  # method to find area of rectangle
+  def area_of_rectangle(self):
+    return ((self.upper_right_point.x - self.lower_left_point.x) \
+             * (self.upper_right_point.y - self.lower_left_point.y))  
+
 
 # Use cases:-
   
-point1 = Point(2, 4)
-falls = point1.falls_in_rectangle((1, 3), (5, 6))
-print(falls)
+#User inputs  
+user_x = float(input("Enter one X coordinate: "))
+user_y = float(input("Enter one Y coordinate: "))
 
-point2 = Point(1, 2)
-dist = round(point1.distance_from_another_point(point2), 2)
-print(dist)
+#Object initialization  
+pointx = Point(user_x, user_y)
+
+print(f"\nUser's guessed points are: ({pointx.x}, {pointx.y})")
+
+#Generating random points
+random_point1 = Point(randint(1, 9), randint(1, 9))
+random_point2 = Point(randint(10, 19), randint(10, 19))
+
+print(f"\nThe two random points of rectangle are: ({random_point1.x}, {random_point1.y}) and ({random_point2.x}, {random_point2.y})")
+
+#Object initialization
+rectanglex = Rectangle(random_point1, random_point2)
+
+#method implematation on object
+falls = pointx.falls_in_rectangle(rectanglex)
+
+print(f"\nUser's guessed point lie within the rectangle: {falls}")
+
+#method implematation on object
+areax = rectanglex.area_of_rectangle()
+print(f"The area of rectangle is: {areax}")
+
+#Object initialization
+point1 = Point(1, 2)
+
+#method implematation on object
+dist = round(pointx.distance_from_another_point(point1), 2)
+print(f"\nDistance of point ({point1.x}, {point1.y}) with user's point ({pointx.x}, {pointx.y}): {dist}")
