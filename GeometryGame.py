@@ -55,6 +55,28 @@ class Rectangle:
         return ((self.upper_right_point.x - self.lower_left_point.x) \
                 * (self.upper_right_point.y - self.lower_left_point.y))
 
+
+class GuiRectangle(Rectangle):
+    def draw(self, canvas):
+        canvas.penup()
+        canvas.goto(self.lower_left_point.x, self.lower_left_point.y)
+        canvas.pendown()
+        canvas.forward(self.upper_right_point.x - self.lower_left_point.x)
+        canvas.left(90)
+        canvas.forward(self.upper_right_point.y - self.lower_left_point.y)
+        canvas.left(90)
+        canvas.forward(self.upper_right_point.x - self.lower_left_point.x)
+        canvas.left(90)
+        canvas.forward(self.upper_right_point.y - self.lower_left_point.y)
+
+
+class GuiPoint(Point):
+    def draw(self, canvas):
+        canvas.penup()
+        canvas.goto(self.x, self.y)
+        canvas.pendown()
+        canvas.dot(5, 'red')
+
     # Use cases:-
 
 
@@ -63,7 +85,7 @@ user_x = float(input("Enter one X coordinate: "))
 user_y = float(input("Enter one Y coordinate: "))
 
 # Object initialization
-pointx = Point(user_x, user_y)
+pointx = GuiPoint(user_x, user_y)
 
 print(f"\nUser's guessed points are: ({pointx.x}, {pointx.y})")
 
@@ -77,7 +99,7 @@ print(
     f"\nThe two random points of rectangle are: ({random_point1.x}, {random_point1.y}) and ({random_point2.x}, {random_point2.y})")
 
 # Object initialization
-rectanglex = Rectangle(random_point1, random_point2)
+rectanglex = GuiRectangle(lower_left_point=random_point1, upper_right_point=random_point2)
 
 # method implementation on object
 falls = pointx.falls_in_rectangle(rectanglex)
@@ -95,21 +117,6 @@ point1 = Point(1, 2)
 dist = round(pointx.distance_from_another_point(point1), 2)
 print(f"\nDistance of point ({point1.x}, {point1.y}) with user's point ({pointx.x}, {pointx.y}): {dist}")
 
-
-myturtle.penup()
-myturtle.goto(random_point1.x, random_point1.y)
-myturtle.pendown()
-myturtle.forward(random_point2.x - random_point1.x)
-myturtle.left(90)
-myturtle.forward(random_point2.y - random_point1.y)
-myturtle.left(90)
-myturtle.forward(random_point2.x - random_point1.x)
-myturtle.left(90)
-myturtle.forward(random_point2.y - random_point1.y)
-
-mypointturtle.penup()
-mypointturtle.goto(user_x, user_y)
-mypointturtle.pendown()
-mypointturtle.dot(5, 'red')
-
+rectanglex.draw(canvas=myturtle)
+pointx.draw(canvas=mypointturtle)
 turtle.done()
